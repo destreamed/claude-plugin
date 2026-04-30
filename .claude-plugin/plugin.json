@@ -18,13 +18,6 @@
       "description": "Generate at https://destreamed.com/settings/tokens",
       "sensitive": true,
       "required": true
-    },
-    "destreamed_base_url": {
-      "type": "string",
-      "title": "Destreamed Base URL",
-      "description": "Override only when self-hosting. Default: https://destreamed.com",
-      "default": "https://destreamed.com",
-      "required": false
     }
   },
   "hooks": "./hooks/hooks.json",

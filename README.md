@@ -17,8 +17,6 @@ Persistent work-log integration. Claude remembers what you've solved before.
 
 You'll be prompted for your **Destreamed API token** (generate one at https://destreamed.com/settings/tokens). It's stored in your OS keychain — never written to plain files.
 
-If you self-host Destreamed, also set `destreamed_base_url` during install.
-
 ## Slash commands
 
 | Command | What it does |
@@ -37,8 +35,7 @@ If you self-host Destreamed, also set `destreamed_base_url` during install.
 
 | Field | Required | Description |
 |---|---|---|
-| `destreamed_api_token` | yes | Your API token. Sensitive — keychain only. |
-| `destreamed_base_url` | no | Defaults to `https://destreamed.com`. Override only if self-hosting. |
+| `destreamed_api_token` | yes | Your API token. Sensitive — stored in your OS keychain. |
 
 ## Privacy
 
