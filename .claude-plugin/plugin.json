@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "destreamed",
+  "version": "0.1.0",
+  "description": "Persistent work-log integration for Claude Code. Claude remembers what you've solved before — streams, beats, echoes.",
+  "author": {
+    "name": "Destreamed",
+    "url": "https://destreamed.com"
+  },
+  "homepage": "https://destreamed.com",
+  "repository": "https://github.com/destreamed/claude-plugin",
+  "license": "MIT",
+  "keywords": ["destreamed", "productivity", "memory", "logging", "mcp", "work-log"],
+  "userConfig": {
+    "destreamed_api_token": {
+      "type": "string",
+      "title": "Destreamed API Token",
+      "description": "Generate at https://destreamed.com/settings/tokens",
+      "sensitive": true,
+      "required": true
+    },
+    "destreamed_base_url": {
+      "type": "string",
+      "title": "Destreamed Base URL",
+      "description": "Override only when self-hosting. Default: https://destreamed.com",
+      "default": "https://destreamed.com",
+      "required": false
+    }
+  },
+  "hooks": "./hooks/hooks.json",
+  "mcpServers": "./.mcp.json"
+}

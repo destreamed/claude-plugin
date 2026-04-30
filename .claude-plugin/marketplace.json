@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "destreamed",
+  "owner": {
+    "name": "Destreamed",
+    "url": "https://destreamed.com"
+  },
+  "plugins": [
+    {
+      "name": "destreamed",
+      "description": "Persistent work-log integration for Claude Code. Claude remembers what you've solved before.",
+      "source": "./",
+      "version": "0.1.0",
+      "strict": true
+    }
+  ]
+}

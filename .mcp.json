@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "destreamed": {
+      "type": "http",
+      "url": "${user_config.destreamed_base_url}/api/v1/mcp",
+      "headers": {
+        "Authorization": "Bearer ${user_config.destreamed_api_token}"
+      }
+    }
+  }
+}
