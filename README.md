@@ -1,12 +1,20 @@
 # Destreamed for Claude Code
 
-Persistent work-log integration. Claude remembers what you've solved before.
+Turns Claude Code into a Destreamed tuner — an AI agent that picks up tasks, follows stream memos, gates material work behind human approval, and persists every step as echoes the team can read.
 
-## What it does
+## The tuner loop
 
-- **Every session**, Claude finds the matching Destreamed stream for your project, lists your open tasks, and posts a session-recap beat that subsequent echoes hang off.
-- **When you report a problem**, Claude searches Destreamed for prior solutions before re-solving from scratch — past fixes, decisions, and discussions are reachable as conversation context.
-- **Important steps** (commits, decisions, blockers, session-end summaries) are persisted as echoes on the recap beat — they survive context compaction, conversation resets, and team handoffs.
+Every session, Claude follows the canonical 5-step Destreamed workflow:
+
+1. **Get tasks** — `get_my_tasks` pulls what's assigned, including the relevant stream memos.
+2. **Read memos** — stream rules override Claude's defaults. Followed strictly.
+3. **Propose** — for any non-trivial change, the plan goes back to you as an `add_echo` with `needs_approval: true`. Claude waits for your Approve.
+4. **Log** — every meaningful step (commits, decisions, blockers) is a 1–3 line echo on the task beat.
+5. **Complete** — `complete_task` with a summary of what was done and what's open.
+
+Two cross-cutting helpers run automatically:
+- **Prior-art search** — when you report a problem, Claude searches past beats and echoes before re-solving.
+- **Question beats** — when Claude needs input, it drops a `kind: question` beat instead of asking only in chat. Replies survive context resets.
 
 ## Install
 
@@ -21,14 +29,14 @@ On first MCP call your browser opens for OAuth — sign in to Destreamed, approv
 
 | Command | What it does |
 |---|---|
-| `/destreamed:onboard` | Run the session-start routine manually (find stream, list tasks, create recap beat). |
-| `/destreamed:search <keywords>` | Query past beats and echoes for prior solutions. |
-| `/destreamed:recap` | Append a recap echo to the current session beat. |
+| `/destreamed:tune` | Walk the 5-step tuner loop manually for the active stream. |
+| `/destreamed:propose` | Submit a plan, decision, or rule-change with `needs_approval: true`. |
+| `/destreamed:search <keywords>` | Query past beats and echoes for prior solutions before solving. |
 
 ## How it hooks in
 
-- **`SessionStart` hook** (matcher `startup|clear`) reminds Claude to run `/destreamed:onboard` before answering the first prompt of a fresh session. Resume and compact don't re-trigger — your existing recap stays in context.
-- **`UserPromptSubmit` hook** detects problem-shaped prompts (error, bug, broken, crash, exception, …) and reminds Claude to search Destreamed for prior solutions first. Silent on normal prompts.
+- **`SessionStart` hook** (matcher `startup|clear`) primes Claude with the tuner-loop reminder before answering the first prompt of a fresh session. Resume and compact don't re-trigger.
+- **`UserPromptSubmit` hook** detects problem-shaped prompts (error, bug, broken, crash, exception, …) and reminds the tuner to search prior beats first. Silent on normal prompts.
 - **MCP server** (Destreamed's HTTP endpoint) is registered automatically — no manual `.mcp.json` editing.
 
 ## Authentication
