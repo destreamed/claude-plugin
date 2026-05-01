@@ -10,7 +10,7 @@
       "name": "destreamed",
       "description": "Persistent work-log integration for Claude Code. Claude remembers what you've solved before.",
       "source": "./",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "strict": true
     }
   ]
