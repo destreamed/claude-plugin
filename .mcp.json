@@ -2,10 +2,7 @@
   "mcpServers": {
     "destreamed": {
       "type": "http",
-      "url": "https://destreamed.com/api/v1/mcp",
-      "headers": {
-        "Authorization": "Bearer ${user_config.destreamed_api_token}"
-      }
+      "url": "https://destreamed.com/api/v1/mcp"
     }
   }
 }

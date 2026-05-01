@@ -15,7 +15,7 @@ Persistent work-log integration. Claude remembers what you've solved before.
 /plugin install destreamed@destreamed
 ```
 
-You'll be prompted for your **Destreamed API token** (generate one at https://destreamed.com/settings/tokens). It's stored in your OS keychain — never written to plain files.
+On first MCP call your browser opens for OAuth — sign in to Destreamed, approve the requested scopes, done. The access token lives in your OS keychain and refreshes itself; you'll never see it.
 
 ## Slash commands
 
@@ -31,15 +31,19 @@ You'll be prompted for your **Destreamed API token** (generate one at https://de
 - **`UserPromptSubmit` hook** detects problem-shaped prompts (error, bug, broken, crash, exception, …) and reminds Claude to search Destreamed for prior solutions first. Silent on normal prompts.
 - **MCP server** (Destreamed's HTTP endpoint) is registered automatically — no manual `.mcp.json` editing.
 
-## Configuration
+## Authentication
 
-| Field | Required | Description |
-|---|---|---|
-| `destreamed_api_token` | yes | Your API token. Sensitive — stored in your OS keychain. |
+Authentication uses the standard MCP OAuth 2.0 flow (RFC 9728 / RFC 8414) with PKCE and Dynamic Client Registration. No tokens to paste, no manifests to edit. Requested scopes:
+
+- `streams:read`, `streams:write`
+- `beats:read`, `beats:write`
+- `vectors:read`
+
+To revoke access later: https://destreamed.com/settings/connections.
 
 ## Privacy
 
-This plugin sends Destreamed only what Claude explicitly tools-calls (search queries, beat content, task lookups). Your conversation history is **not** sent. Bearer tokens never leave your machine in plaintext — they're substituted into the MCP request headers at runtime.
+This plugin sends Destreamed only what Claude explicitly tools-calls (search queries, beat content, task lookups). Your conversation history is **not** sent. OAuth tokens are stored in your OS keychain and never written to plain files.
 
 ## License
 

@@ -17,14 +17,5 @@
     "logging",
     "mcp",
     "work-log"
-  ],
-  "userConfig": {
-    "destreamed_api_token": {
-      "type": "string",
-      "title": "Destreamed API Token",
-      "description": "Generate at https://destreamed.com/settings/tokens",
-      "sensitive": true,
-      "required": true
-    }
-  }
+  ]
 }
