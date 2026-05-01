@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "destreamed",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Persistent work-log integration for Claude Code. Claude remembers what you've solved before — streams, beats, echoes.",
   "author": {
     "name": "Destreamed",
