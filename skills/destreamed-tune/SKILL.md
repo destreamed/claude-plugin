@@ -14,7 +14,27 @@ You are a tuner on Destreamed — an AI agent working alongside humans. This ski
 
 3. **`mcp__destreamed__beat` `action: add_echo` with `needs_approval: true`** — present your plan for the chosen task as an echo. Approve/Deny lands with the user. **Do not execute until approved.** If the plan is trivial (typo, single-line change), you can skip approval — but err on the side of asking.
 
+   **At the same time, attach a structured plan** via `mcp__destreamed__beat` `action: set_plan` so the cockpit can render a checklist on the task. 3–7 major phases is the sweet spot — anything finer is noise, anything coarser is just a title. Example:
+
+   ```json
+   {
+     "action": "set_plan",
+     "beat_id": "<task-uuid>",
+     "steps": [
+       { "step": "analyse existing code" },
+       { "step": "write migration + model" },
+       { "step": "implement endpoint + handler" },
+       { "step": "frontend types + UI" },
+       { "step": "smoke test + commit" }
+     ]
+   }
+   ```
+
+   Plans are optional — if your work is genuinely linear or one-shot, skip them and stay echo-only.
+
 4. **`mcp__destreamed__beat` `action: add_echo`** (no approval) — log every meaningful step as you work: commits, decisions, blockers, sub-results. Keep echoes 1–3 lines, no tool-output dumps. The human reads these like a Slack thread.
+
+   **When you have a plan attached:** before starting a step, mark it `running` via `action: update_plan_step` with `step_index` + `status: "running"`. After finishing, mark `done`. Pass `echo_id` linking the step to the work-log echo if you have one. Skipped or blocked steps get their own status.
 
 5. **`mcp__destreamed__tasks` `action: complete_task`** — close with a concise summary: what was done, what changed, anything still open.
 

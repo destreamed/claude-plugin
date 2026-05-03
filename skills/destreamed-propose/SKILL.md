@@ -27,6 +27,19 @@ Why: matches the new vocabulary memo; old name was confusing in API.
 Impact: schema change + frontend renames in 14 files. Reversible only via fresh migration.
 ```
 
+## Pair the proposal with a structured plan
+
+When the proposal covers a multi-step task, also call `mcp__destreamed__beat` `action: set_plan` with the major phases (3–7 steps). The cockpit then renders a checklist on the task so the user sees progress at a glance and you have a place to mark steps `running` / `done` as you work. Example:
+
+```json
+{ "action": "set_plan", "beat_id": "<task>", "steps": [
+  { "step": "schema migration" }, { "step": "backend endpoint" },
+  { "step": "frontend wiring" }, { "step": "smoke test" }
+]}
+```
+
+Skip the plan when the work is genuinely a single step.
+
 ## What to do while waiting
 
 Stop. Don't pre-execute "the safe parts". The user reads the proposal, decides, and replies via echo (Approve / Deny / Modify). Only then continue.
