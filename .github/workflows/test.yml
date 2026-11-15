@@ -1,0 +1,18 @@
+name: test
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  hooks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax
+        run: for f in scripts/*.sh tests/*.sh; do bash -n "$f"; done
+      - name: Hook JSON
+        run: jq -e '.hooks' hooks/hooks.json >/dev/null && jq -e '.name' .claude-plugin/plugin.json >/dev/null
+      - name: SessionStart hook (CK-174 sunset notice)
+        run: bash tests/session-start.test.sh
